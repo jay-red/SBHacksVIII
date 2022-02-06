@@ -123,8 +123,6 @@ function init_amogitech() {
 
 		data.anim.ctx.drawImage( data.upload.image, -min_x, -min_y );
 
-		console.log( min_x, min_y );
-
 		data.anim.target_x -= min_x;
 		data.anim.target_y -= min_y;
 
@@ -172,7 +170,7 @@ function init_amogitech() {
 	}
 
 	function handle_amogi_change() {
-		console.log( "amogi" );
+		console.log( "amogitech v2" );
 
 		if( ELEM.AMOGI_FILE.files.length == 0 ) return;
 
