@@ -5,8 +5,17 @@
 	<body>
 		<input type="file" id="anim-img" accept="image/*"/>
 		<br />
-		<button disabled>Stop Capture</button>
-		<button disabled>Reset Canvas</button>
+		<br />
+		<label>
+			Stroke Width: 
+			<input type="number" id="stroke-width" value="1" disabled/>
+		</label>
+		<br />
+		<br />
+		<button id="stop-capture" disabled>Stop Capture</button>
+		<button id="reset-canvas" disabled>Reset Canvas</button>
+		<br />
+		<a id="download-link" download>Waiting for capture...</a>
 		<br />
 		<canvas id="anim-canvas"></canvas>
 		<script src="./js/draw.js"></script>
