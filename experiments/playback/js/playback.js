@@ -7,6 +7,7 @@ function init_playback() {
 
 	data["anim"] = {};
 
+	data.anim["name"] = "ximugadle2071.jpg";
 	data.anim["ctx"] = null;
 	data.anim["cap"] = null;
 	data.anim["img"] = new Image();
@@ -65,14 +66,14 @@ function init_playback() {
 
 		data.anim.img.addEventListener( "load", handle_image_load );
 
-		data.anim.img.src = "./assets/6ee29cb098b8f1f601f73e9351db4e89.webp";
+		data.anim.img.src = "../circle/amogus/" + data.anim.name;
 	}
 
 	xhr.responseType = "arraybuffer";
 
 	xhr.addEventListener( "readystatechange", handle_ready_state_change );
 
-	xhr.open( "GET", "./assets/6ee29cb098b8f1f601f73e9351db4e89.webp.sus" );
+	xhr.open( "GET", "../circle/sus/"  + data.anim.name + ".sus" );
 	xhr.send();
 }
 
