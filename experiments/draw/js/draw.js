@@ -209,6 +209,10 @@ function init_draw() {
 		ELEM.ANIM_CANVAS.removeEventListener( "mousemove", handle_mouse_move );
 		ELEM.ANIM_CANVAS.removeEventListener( "mouseup", handle_mouse_up );
 
+		ELEM.ANIM_CANVAS.removeEventListener( "pointerdown", handle_mouse_down );
+		ELEM.ANIM_CANVAS.removeEventListener( "pointermove", handle_mouse_move );
+		ELEM.ANIM_CANVAS.removeEventListener( "pointerup", handle_mouse_up );
+
 		if( ELEM.ANIM_IMG.files.length == 0 ) return;
 
 		ELEM.ANIM_DOWNLOAD.setAttribute( "download", ELEM.ANIM_IMG.files[0].name + ".sus" );
@@ -218,6 +222,8 @@ function init_draw() {
 
 		data.loader.reader.readAsDataURL( ELEM.ANIM_IMG.files[0] );
 	}
+
+	console.log( "v2" );
 
 	reset_capture();
 
