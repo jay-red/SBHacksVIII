@@ -5,6 +5,8 @@ function init_amogitech() {
 
 	ELEM["AMOGI_FILE"] = document.getElementById( "amogi-file" );
 	ELEM["AMOGI_CANVAS"] = document.getElementById( "amogi-canvas" );
+	ELEM["AMOGI_LOGO"] = document.getElementById( "logo-div" );
+	ELEM["AMOGI_LOGO_FIXED"] = document.getElementById( "fixed-logo" );
 
 	var data = {};
 
@@ -185,6 +187,8 @@ function init_amogitech() {
 		data.upload.reader.readAsDataURL( ELEM.AMOGI_FILE.files[0] );
 
 		ELEM.AMOGI_FILE.setAttribute( "disabled", "" );
+		ELEM.AMOGI_LOGO.setAttribute( "class", "hidden" );
+		ELEM.AMOGI_LOGO_FIXED.setAttribute( "class", "show" );
 	}
 
 	ELEM.AMOGI_FILE.addEventListener( "change", handle_amogi_change );

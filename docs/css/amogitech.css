@@ -4,6 +4,24 @@ body, html {
 	overflow: hidden;
 }
 
+@keyframes bounce {
+	0%, 50%, 100% {
+		transform: translateY(0); }
+	25% {
+		transform: translateY(-10px); }
+	75% {
+		transform: translateY(-6px); 
+	} 
+}
+
+.show {
+	display: initial!important;
+}
+
+.hidden {
+	display: none!important;
+}
+
 #background {
 	position: fixed;
 	min-height: 100vh;
@@ -31,12 +49,34 @@ body, html {
 	padding: 120px 0;
 }
 
+#logo {	
+	animation: bounce 3s infinite;
+	animation-timing-function: linear;
+	max-width: 900px;
+}
+
+#fixed-logo {	
+	width: 200px;
+	position: fixed;
+	top: 20px;
+	left: 20px;
+}
+
+#logo-div {
+	width: 100%;
+	position: fixed;
+	top: 40%;
+}
+
 #amogi-canvas {
 	width: 100%;
 	max-width: 100%;
+	animation: bounce 3s infinite;
+	animation-timing-function: linear;
 }
 
 #amogi-button {
+	font-size: 5vh;
 	color: white;
 	cursor: pointer;
 	border-style: solid;
