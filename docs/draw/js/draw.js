@@ -160,9 +160,13 @@ function init_draw() {
 
 		data.draw.ctx.strokeStyle = "#FF0000";
 
-		ELEM.ANIM_CANVAS.addEventListener( "mousedown", handle_mouse_down );
-		ELEM.ANIM_CANVAS.addEventListener( "mousemove", handle_mouse_move );
-		ELEM.ANIM_CANVAS.addEventListener( "mouseup", handle_mouse_up );
+		//ELEM.ANIM_CANVAS.addEventListener( "mousedown", handle_mouse_down );
+		//ELEM.ANIM_CANVAS.addEventListener( "mousemove", handle_mouse_move );
+		//ELEM.ANIM_CANVAS.addEventListener( "mouseup", handle_mouse_up );
+
+		ELEM.ANIM_CANVAS.addEventListener( "pointerdown", handle_mouse_down );
+		ELEM.ANIM_CANVAS.addEventListener( "pointermove", handle_mouse_move );
+		ELEM.ANIM_CANVAS.addEventListener( "pointerup", handle_mouse_up );
 
 		ELEM.ANIM_WIDTH.removeAttribute( "disabled" );	
 	}
@@ -205,9 +209,9 @@ function init_draw() {
 		ELEM.ANIM_STOP.removeEventListener( "click", handle_stop_click );
 		ELEM.ANIM_RESET.removeEventListener( "click", handle_reset_click );
 
-		ELEM.ANIM_CANVAS.removeEventListener( "mousedown", handle_mouse_down );
-		ELEM.ANIM_CANVAS.removeEventListener( "mousemove", handle_mouse_move );
-		ELEM.ANIM_CANVAS.removeEventListener( "mouseup", handle_mouse_up );
+		//ELEM.ANIM_CANVAS.removeEventListener( "mousedown", handle_mouse_down );
+		//ELEM.ANIM_CANVAS.removeEventListener( "mousemove", handle_mouse_move );
+		//ELEM.ANIM_CANVAS.removeEventListener( "mouseup", handle_mouse_up );
 
 		ELEM.ANIM_CANVAS.removeEventListener( "pointerdown", handle_mouse_down );
 		ELEM.ANIM_CANVAS.removeEventListener( "pointermove", handle_mouse_move );
@@ -223,7 +227,7 @@ function init_draw() {
 		data.loader.reader.readAsDataURL( ELEM.ANIM_IMG.files[0] );
 	}
 
-	console.log( "v3" );
+	console.log( "v5" );
 
 	reset_capture();
 
