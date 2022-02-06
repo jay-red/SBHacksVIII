@@ -223,7 +223,7 @@ function init_draw() {
 		data.loader.reader.readAsDataURL( ELEM.ANIM_IMG.files[0] );
 	}
 
-	console.log( "v2" );
+	console.log( "v3" );
 
 	reset_capture();
 
