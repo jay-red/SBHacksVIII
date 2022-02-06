@@ -52,7 +52,8 @@ body, html {
 #logo {	
 	animation: bounce 3s infinite;
 	animation-timing-function: linear;
-	max-width: 900px;
+	max-width: 800px;
+	width: 100%;
 }
 
 #fixed-logo {	
@@ -63,7 +64,7 @@ body, html {
 }
 
 #logo-div {
-	width: 100%;
+	width: 100vw;
 	position: fixed;
 	top: 40%;
 }
