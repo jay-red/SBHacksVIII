@@ -20,29 +20,137 @@ function init_amogitech() {
 
 	data.anim["ctx"] = null;
 	data.anim["xhr"] = null;
+	data.anim["cap"] = null;
 	data.anim["target_x"] = -1;
 	data.anim["target_y"] = -1;
+	data.anim["target_r"] = -1;
+	data.anim["frame"] = 0;
+	data.anim["max_frame"] = 0;
+	data.anim["drawing"] = false;
+	data.anim["last_drawing"] = false;
+
+	function game_loop( ts ) {
+		var idx = data.anim.frame << 1;
+		var x = data.anim.cap[idx + 4];
+		var y = data.anim.cap[idx + 5];
+
+		if( x == -1 || y == -1 ) data.anim.drawing = false;
+		else data.anim.drawing = true;
+
+		x += data.anim.target_x;
+ 		y += data.anim.target_y;
+
+		if( data.anim.drawing ) {
+			if( data.anim.last_drawing != data.anim.drawing ) {
+				data.anim.ctx.beginPath();
+				data.anim.ctx.moveTo( x, y );
+			} else {
+				data.anim.ctx.lineTo( x, y );
+				data.anim.ctx.stroke();
+			}
+		}
+
+		data.anim.last_drawing = data.anim.drawing;
+
+		data.anim.frame += 1;
+		if( data.anim.frame < data.anim.max_frame ) {
+			window.requestAnimationFrame( game_loop );
+		} else {
+			data.upload.xhr = null;
+			data.upload.file = null;
+			data.upload.form = null;
+			data.upload.reader = null;
+			data.upload.image = null;
+
+			data.anim.ctx = null;
+			data.anim.xhr = null;
+			data.anim.cap = null;
+			data.anim.target_x = -1;
+			data.anim.target_y = -1;
+			data.anim.target_r = -1;
+			data.anim.frame = 0;
+			data.anim.max_frame = 0;
+			data.anim.drawing = false;
+			data.anim.last_drawing = false;
+
+			ELEM.AMOGI_FILE.removeAttribute( "disabled" );
+		}
+	}
 
 	function handle_anim_ready_state_change() {
 		if( data.anim.xhr.readyState != 4 || data.anim.xhr.status != 200 ) return;
 
-		console.log( data.anim.target_x, data.anim.target_y );
+		data.anim.cap = new Int16Array( data.anim.xhr.response );
+
+		data.anim.max_frame = ( ( data.anim.cap.length - 4 ) / 2 ) | 0;
+
+		var center_x = data.anim.cap[0];
+		var center_y = data.anim.cap[1];
+		var radius = data.anim.cap[2] - center_x;
+		var scale = data.anim.target_r / radius;
+		var width = data.anim.cap[3] * scale;
+		if( width < 0 ) width = 1;
+
+		var min_x = 0;
+		var min_y = 0;
+		var max_x = data.upload.image.width;
+		var max_y = data.upload.image.height;
+
+		var temp;
+
+		for( var i = 0; i < data.anim.max_frame; ++i ) {
+			if( data.anim.cap[( i << 1 ) + 4] == -1 || data.anim.cap[( i << 1 ) + 5] == -1 ) continue;
+			data.anim.cap[( i << 1 ) + 4] = data.anim.cap[( i << 1 ) + 4] * 1.0 - center_x;
+			data.anim.cap[( i << 1 ) + 5] = data.anim.cap[( i << 1 ) + 5] * 1.0 - center_y;
+			data.anim.cap[( i << 1 ) + 4] = data.anim.cap[( i << 1 ) + 4] * scale;
+			data.anim.cap[( i << 1 ) + 5] = data.anim.cap[( i << 1 ) + 5] * scale;
+
+			temp = data.anim.cap[( i << 1 ) + 4] + data.anim.target_x;
+			if( temp - width < min_x ) min_x = temp - width;
+			else if( temp + width > max_x ) max_x = temp + width;
+
+			temp = data.anim.cap[( i << 1 ) + 5] + data.anim.target_y;
+			if( temp - width < min_y ) min_y = temp - width;
+			else if( temp + width > max_y ) max_y = temp + width;
+		}
+
+		ELEM.AMOGI_CANVAS.width = max_x - min_x;
+		ELEM.AMOGI_CANVAS.height = max_y - min_y;
+
+		data.anim.ctx = ELEM.AMOGI_CANVAS.getContext( "2d" );
+
+		data.anim.ctx.drawImage( data.upload.image, -min_x, -min_y );
+
+		console.log( min_x, min_y );
+
+		data.anim.target_x -= min_x;
+		data.anim.target_y -= min_y;
+
+		data.anim.ctx.lineWidth = width;
+		data.anim.ctx.strokeStyle = "#FF0000";
+
+		window.requestAnimationFrame( game_loop );
+
+		//console.log( data.anim.target_x, data.anim.target_y, data.anim.target_r );
 	}
 
 	function handle_amogi_ready_state_change() {
 		if( data.upload.xhr.readyState != 4 || data.upload.xhr.status != 200 ) return;
 
+		var response = JSON.parse( data.upload.xhr.responseText );
+
+		data.anim.target_x = response.x | 0;
+		data.anim.target_y = response.y | 0;
+		data.anim.target_r = response.r;
+
 		data.anim.xhr = new XMLHttpRequest();
+		data.anim.xhr.responseType = "arraybuffer";
 
 		data.anim.xhr.addEventListener( "readystatechange", handle_anim_ready_state_change )
 
-		data.anim.xhr.open( "GET", "./assets/sus/" + AMOGI_PRESETS[( Math.random() * AMOGI_PRESETS.length ) | 0] + ".sus" );
+		data.anim.xhr.open( "GET", "./assets/sus/" + AMOGI_PRESETS[( ( ( ( data.anim.target_x ) | 0 ) + ( ( data.anim.target_y ) | 0 ) + ( ( data.anim.target_r ) | 0 ) + 10419 ) % AMOGI_PRESETS.length ) | 0] + ".sus" );
 		data.anim.xhr.send();
 
-		var response = JSON.parse( data.upload.xhr.responseText );
-
-		data.anim.target_x = response.x;
-		data.anim.target_y = response.y;
 	}
 
 	function handle_image_load() {
@@ -50,7 +158,7 @@ function init_amogitech() {
 
 		data.upload.xhr.addEventListener( "readystatechange", handle_amogi_ready_state_change );
 
-		data.upload.xhr.open( "POST", "http://localhost:5000/" );
+		data.upload.xhr.open( "POST", "https://amogitech.herokuapp.com/" );
 		data.upload.xhr.send( data.upload.form );
 	}
 
