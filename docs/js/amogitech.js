@@ -170,7 +170,7 @@ function init_amogitech() {
 	}
 
 	function handle_amogi_change() {
-		console.log( "amogitech v3" );
+		console.log( "amogitech v5" );
 
 		if( ELEM.AMOGI_FILE.files.length == 0 ) return;
 
