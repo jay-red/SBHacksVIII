@@ -1,7 +1,6 @@
 import os
 import cv2
 import numpy as np
-import imutils
 
 for root, dirs, files in os.walk( "amogus" ):
 	for file in files:
