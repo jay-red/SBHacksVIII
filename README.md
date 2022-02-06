@@ -1,5 +1,5 @@
 # Amogitech
-Authors: Alex Pham, Jared Flores, Andrew Setiadi
+Authors: Alex Pham, Jared Flores, Andrew Setiadi  
 Our submission for Best Joke Hack at SB Hacks VIII
 
 ## Features
