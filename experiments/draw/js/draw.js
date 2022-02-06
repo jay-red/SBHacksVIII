@@ -109,6 +109,7 @@ function init_draw() {
 		data.draw.last_time = -10419;
 		data.draw.drawing = false;
 		data.draw.last_drawing = false;
+		data.draw.idx = 0;
 
 		data.draw.coords[0] = -1;
 		data.draw.coords[1] = -1;
@@ -200,6 +201,7 @@ function init_draw() {
 		data.draw.last_drawing = false;
 		data.draw.ctx = null;
 		data.draw.download = null;
+		data.draw.idx = 0;
 
 		reset_capture();
 
@@ -227,7 +229,7 @@ function init_draw() {
 		data.loader.reader.readAsDataURL( ELEM.ANIM_IMG.files[0] );
 	}
 
-	console.log( "v5" );
+	console.log( "v6" );
 
 	reset_capture();
 
