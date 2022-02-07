@@ -36,7 +36,7 @@ function init_amogitech() {
 		var x = data.anim.cap[idx + 4];
 		var y = data.anim.cap[idx + 5];
 
-		if( x == -1 || y == -1 ) data.anim.drawing = false;
+		if( x == -32768 || y == -32768 ) data.anim.drawing = false;
 		else data.anim.drawing = true;
 
 		x += data.anim.target_x;
@@ -101,7 +101,11 @@ function init_amogitech() {
 		var temp;
 
 		for( var i = 0; i < data.anim.max_frame; ++i ) {
-			if( data.anim.cap[( i << 1 ) + 4] == -1 || data.anim.cap[( i << 1 ) + 5] == -1 ) continue;
+			if( data.anim.cap[( i << 1 ) + 4] == -1 || data.anim.cap[( i << 1 ) + 5] == -1 ) {
+				data.anim.cap[( i << 1 ) + 4] = -32768;
+				data.anim.cap[( i << 1 ) + 5] = -32768;
+				continue;
+			}
 			data.anim.cap[( i << 1 ) + 4] = data.anim.cap[( i << 1 ) + 4] * 1.0 - center_x;
 			data.anim.cap[( i << 1 ) + 5] = data.anim.cap[( i << 1 ) + 5] * 1.0 - center_y;
 			data.anim.cap[( i << 1 ) + 4] = data.anim.cap[( i << 1 ) + 4] * scale;
@@ -170,8 +174,6 @@ function init_amogitech() {
 	}
 
 	function handle_amogi_change() {
-		console.log( "amogitech v5" );
-
 		if( ELEM.AMOGI_FILE.files.length == 0 ) return;
 
 		data.upload.file = ELEM.AMOGI_FILE.files[0];
@@ -190,6 +192,8 @@ function init_amogitech() {
 	}
 
 	ELEM.AMOGI_FILE.addEventListener( "change", handle_amogi_change );
+
+	console.log( "amogitech v6" );
 }
 
 window.addEventListener( "load", init_amogitech );

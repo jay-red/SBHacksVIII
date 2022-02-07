@@ -42,11 +42,21 @@ for root, dirs, files in os.walk( "amogus" ):
 
 			idx += 1
 
+		cv2.drawContours( edge, contour_list, 0, ( 255, 0, 0 ), 3 )
+		cv2.imshow( "Detected Circle", edge )
+		cv2.waitKey(0)
+
 		blank_image = np.zeros( raw.shape, np.uint8 )
 
 		ellipse_depth = []
 
 		count = 0
+
+		ellipse_copy = raw.copy()
+		for ellipse in ellipse_list:
+			cv2.ellipse( ellipse_copy, ellipse, ( 0, 255, 0 ), 3 )
+		cv2.imshow( "Detected Circle", ellipse_copy )
+		cv2.waitKey(0)
 
 		for ellipse1 in ellipse_list:
 			layer = 0
@@ -67,7 +77,7 @@ for root, dirs, files in os.walk( "amogus" ):
 		if len( ellipse_depth ) > 0:
 			ellipse_depth = ellipse_depth[-1]
 			ellipse_depth.sort( key = lambda x : max( x[1] ), reverse = True )
-			cv2.ellipse( raw, ellipse_depth[0], ( 255, 0, 0 ), 3 )
+			cv2.ellipse( raw, ellipse_depth[0], ( 0, 0, 255 ), 3 )
 
 		cv2.imshow( "Detected Circle", raw )
 		cv2.waitKey(0)

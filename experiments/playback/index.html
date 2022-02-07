@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link rel="stylesheet" type="text/css" href="../../docs/css/amogitech.css" />
 	</head>
 	<body>
-		<canvas id="anim-canvas"></canvas>
-		<script src="./js/playback.js"></script>
+		<video autoplay muted loop id="background">
+			<source src="../../docs/assets/background.mp4" type="video/mp4">
+		</video>
+		<div id="container">
+			<div id="center">
+				<canvas id="amogi-canvas"></canvas>
+			</div>
+		</div>
+		<img id="fixed-logo" src="../../docs/assets/amogitech.png"/>
+		<script src="js/playback.js"></script>
 	</body>
 </html>
